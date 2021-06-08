@@ -23,8 +23,10 @@ $ComputerName | ForEach-Object {
 
     while ($sessionID -eq "")
         {
-            Write-Host "Please choose & type session ID for $($comp.ToUpper()):" -ForegroundColor Green
+            Write-Host "Enumerating active sessions on $($comp.ToUpper())..." -ForegroundColor Cyan
             (qwinsta /server:$comp | Select-String active).ToString().Replace("Active","").Replace("console","")
+            if (!$?) {break}
+            Write-Host "Please choose & type session ID for $($comp.ToUpper()):" -ForegroundColor Green
             $sessionID = Read-Host
         }
 
@@ -39,4 +41,7 @@ $ComputerName | ForEach-Object {
             Get-Variable cmd_* | select @{n='ComputerName';e={$_.name.ToString().Replace("cmd_","").ToUpper()}}, @{n='ID';e={$_.value.ID}}, @{n='MessageActiveOnDesktop';e={if ($_.value.HasExited) {"False"} else {"True"}}} | Format-Table
             sleep -Seconds 1; cls;
         }
+
+    Write-Host "Done." -ForegroundColor Green
+    Get-Variable cmd_* | select @{n='ComputerName';e={$_.name.ToString().Replace("cmd_","").ToUpper()}}, @{n='ID';e={$_.value.ID}}, @{n='MessageActiveOnDesktop';e={if ($_.value.HasExited) {"False"} else {"True"}}} | Format-Table
 }
