@@ -24,9 +24,11 @@ $ComputerName | ForEach-Object {
     while ($sessionID -eq "")
         {
             Write-Host "Enumerating active sessions on $($comp.ToUpper())..." -ForegroundColor Cyan
-            (qwinsta /server:$comp | Select-String active) | ForEach-Object {$_.ToString().Replace("Active","").Replace("console","").Replace("rdp-tcp#5","").Trim()}
+            $ActiveSessions = (qwinsta /server:$comp | Select-String active) | ForEach-Object {$_.ToString().Replace("Active","").Replace("console","").Replace("rdp-tcp#5","").Trim()}
             if (!$?) {break}
             Write-Host "Please choose & type session ID for $($comp.ToUpper()):" -ForegroundColor Green
+            "UserName`t`tSessionID"
+            $ActiveSessions
             $sessionID = Read-Host
         }
 
