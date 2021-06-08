@@ -40,7 +40,7 @@ $ComputerName | ForEach-Object {
     # wait for msg sessions to terminate
     while (Get-Variable cmd_* | foreach { $_.Value.HasExited} | Select-String "False") {
             Write-Host "waiting for msg sessions to terminate... (can press ctrl+c to exit)" -ForegroundColor Cyan;
-            Get-Variable cmd_* | select @{n='ComputerName';e={$_.name.ToString().Replace("cmd_","").ToUpper()}}, @{n='ID';e={$_.value.ID}}, @{n='MessageActiveOnDesktop';e={if ($_.value.HasExited) {"False"} else {"True"}}} | Format-Table
+            Get-Variable cmd_* | select @{n='ComputerName';e={$_.name.ToString().Replace("cmd_","").ToUpper()}}, @{n='ProcessID';e={$_.value.ID}}, @{n='MessageActiveOnDesktop';e={if ($_.value.HasExited) {"False"} else {"True"}}} | Format-Table
             sleep -Seconds 1; cls;
         }
 
