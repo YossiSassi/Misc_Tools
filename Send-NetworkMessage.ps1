@@ -2,7 +2,7 @@ function Send-NetworkMessage {
 <#
 .SYNOPSIS
     Notify users over the network (some fun with msg.exe automation)
-    Author: Y1nTh35h311 (yossis@protonmail.com, #Yossi_Sassi)
+    Author: 1nTh35h311 (yossis@protonmail.com, #Yossi_Sassi)
     Version: 1.0.0
     License: BSD 3-Clause
     Required Dependencies: None (LoTL binary msg.exe)
