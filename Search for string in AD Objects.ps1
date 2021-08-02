@@ -1,7 +1,12 @@
-﻿# Looks for interesting strings (as well as IP addresses) in all AD objects.
-# No dependencies, no special permissions (any authenticated user)
-# v1.0
-# comments to yossis@protonmail.com
+<#
+.SYNOPSIS
+    Looks for interesting strings (as well as IP addresses) in all AD objects.
+    Author: 1nTh35h311 (yossis@protonmail.com, @Yossi_Sassi)
+    Version: 1.0.0
+    License: BSD 3-Clause
+    Required Dependencies: None (excpet being connected to a Domain Controller as any authenticated user)
+    Optional Dependencies: None (No dependencies, no special permissions)
+#>
 
 param (
     [cmdletbinding()]
