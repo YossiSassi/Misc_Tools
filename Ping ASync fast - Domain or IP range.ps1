@@ -1,5 +1,5 @@
 ## FAST(!) ping Async - for Domain-wide & non-domain networks ##
-# Done with "pure" living off the land mindset - no dependencies/Modules needed.
+# Done with "pure" living off the land mindset - no dependencies/Modules needed. supports Powershell v2.0+.
 # Comments to yossis@protonmail.com (1nTh35h311)
 
 # get my current ipv4
@@ -21,7 +21,7 @@ switch ($Role){
 
 $DomainRoles = 1,3,4,5;
 
-if ($Role -in $DomainRoles) {
+if ($DomainRoles -contains $Role) {
         "Running on $ComputerRole (Domain identified)`n";
         $Domain = ([adsi]'').name.ToString().ToUpper();
         $Option = Read-Host "Domain Or IP Range?`n1=Domain <$Domain>`n2=Current host's IP Range <$IPRange.1..254>`n3=Other IP Range`n";
@@ -37,7 +37,7 @@ switch ($Option)
         # Domain
         1 {
             # get all enabled Computer accounts from the currently connected AD domain
-            if ($Role -in $DomainRoles) {
+            if ($DomainRoles -contains $Role) {
                     $s = New-Object System.DirectoryServices.DirectorySearcher; $s.PageSize=100000; $s.Filter='(&(objectClass=computer)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))';
                     $HostsToCheck = $s.FindAll().Properties.name;
                 }
@@ -264,7 +264,15 @@ $IPs = ([PingEx.NetworkInformationExtensions]::PingAsync($HostsToCheck, [TimeSpa
 
 # Combine outputs from BOTH methods for ideal results
 $IPs += $SuccessIPs; $IPs = $IPs | Where-Object {$_ -match '(\d{1,3}\.){3}\d{1,3}'} | select -Unique;
-Write-Host "Total of $($SuccessIPs.count) unique responding IPv4 addresses found." -ForegroundColor Cyan;
+if ($($SuccessIPs.count) -ge 1)
+	{
+		Write-Host "Total of $($SuccessIPs.count) unique responding IPv4 addresses found." -ForegroundColor Cyan;
+	}
+else
+	{
+		Write-Host "Couldn't find responding IPv4 addresses. Quiting." -ForegroundColor Cyan;	
+		Exit;
+	}
 
 ## Get back list of Computer names
 Write-Host "Attempting to resolve IP to hostname from responding IP(s)..." -ForegroundColor Cyan;
