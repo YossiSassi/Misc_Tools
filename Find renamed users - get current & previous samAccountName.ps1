@@ -1,4 +1,5 @@
 ﻿# Find renamed accounts (New and old samaccountname)  - no dependencies / No AD module required. Permissions needed: 'Event Log Redears' or higher.
+ # December 2021: Useful to detect SamAccountName Spoofing exploitation (CVE-2021-42278 and CVE-2021-42287)
 # comments to yossis@protonmail.com
 
 $UserRenamedFilter = @'
@@ -39,6 +40,6 @@ if ($Events)
             $RenamedBy = $xml[5].'#text' # renamed by
             $LogonID = $xml[7].'#text' # Session LogonID
             $datetime = $_.TimeCreated;
-            Write-Host "Current account name:<$NewSAMaccName> <SID: $Sid>`nPrevious SamAccountName: <$PrevSAMaccName>`nRenamed by <$RenamedBy> on <$datetime> during LogonID <$LogonID>" -ForegroundColor $(Switch-Color)
+            Write-Host "Updated account name:<$NewSAMaccName> <SID: $Sid>`nPrevious SamAccountName: <$PrevSAMaccName>`nRenamed by <$RenamedBy> on <$datetime> during LogonID <$LogonID>" -ForegroundColor $(Switch-Color)
         }
     }
