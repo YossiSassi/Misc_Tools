@@ -1,5 +1,5 @@
 ﻿# Find renamed accounts (New and old samaccountname)  - no dependencies / No AD module required. Permissions needed: 'Event Log Redears' or higher.
- # December 2021: Useful to detect SamAccountName Spoofing exploitation (CVE-2021-42278 and CVE-2021-42287)
+# December 2021: Useful to detect SamAccountName Spoofing exploitation (CVE-2021-42278 and CVE-2021-42287)
 # comments to yossis@protonmail.com
 
 $UserRenamedFilter = @'
