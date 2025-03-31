@@ -1,0 +1,1 @@
+(New-Object System.Security.Principal.SecurityIdentifier("$((New-Object System.Security.Principal.SecurityIdentifier($(([adsi]'').objectSid), 0)).Value)-500")).Translate([System.Security.Principal.NTAccount]).Value
